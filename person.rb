@@ -1,4 +1,3 @@
-
 require_relative 'nameable'
 require_relative 'capitalize_decorator'
 require_relative 'trimmer_decorator'
@@ -18,6 +17,7 @@ class Person
 
   def of_age?
     return true if @age >= 18
+
     false
   end
 
