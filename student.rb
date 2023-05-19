@@ -1,4 +1,7 @@
+require_relative './person'
+
 class Student < Person
+
   def initialize(age, classroom, name: 'unknown', parent_permission: true)
     super(age, name: name, parent_permission: parent_permission)
     @classroom = classroom
@@ -8,7 +11,7 @@ class Student < Person
     '¯(ツ)/¯'
   end
 
-  def classrom = (classroom)
+  def classrom=(classroom)
     @classroom = classroom
     classroom.student.push(self) unless classrom.student.include?(self)
   end
