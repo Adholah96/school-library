@@ -42,4 +42,5 @@ def handle_option(option, books, people, rentals)
   end
 end
 
+# Call the main method to execute program
 main
