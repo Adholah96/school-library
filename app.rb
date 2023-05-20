@@ -18,7 +18,7 @@ def list_all_people(people)
   puts
   people.each_with_index do |person, index|
     person_type = person.instance_of?(Student) ? '[Student]' : '[Teacher]'
-    puts "#{index + 1}. #{person_type} Name: #{person.name}, ID: #{person.id}"
+    puts "#{index + 1}. #{person_type} Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
     puts
   end
 end
@@ -136,7 +136,8 @@ def print_rental_info(rental, person_id)
   book_info = "Book: #{rental.book.title} by #{rental.book.author}"
   person_info = "Person: #{rental.person.name}"
   date_info = "Date: #{rental.date}"
-  puts "#{rental.person.id}. #{book_info} - #{person_info} - #{date_info}"
+  age_info = "Age: #{person.age}"
+  puts "#{rental.person.id}. #{book_info} - #{person_info} - #{date_info} - #{age_info}"
   puts
 end
 
