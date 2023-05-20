@@ -41,5 +41,6 @@ def handle_option(option, books, people, rentals)
     puts 'Invalid option!'
   end
 end
+
 main
 
