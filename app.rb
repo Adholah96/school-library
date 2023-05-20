@@ -4,6 +4,7 @@ require_relative 'book'
 require_relative 'rental'
 require_relative 'student'
 require_relative 'teacher'
+
 def list_all_books(books)
   puts 'List of books:'
   puts
@@ -47,8 +48,9 @@ def create_student(people)
   print 'Has parent permission? (Y/N): '
   permission = gets.chomp == 'Y'
   student_classroom = Classroom.new('Classroom 1')
-  person = Student.new(student_classroom, age, name: name, parent_permission: permission)
+  person = Student.new(age, student_classroom, name: name, parent_permission: permission)
   people.push(person)
+  student_classroom.students.push(person) # Add the student to the classroom
   puts 'Person created successfully!'
   puts
 end
@@ -136,7 +138,7 @@ def print_rental_info(rental, person_id)
   book_info = "Book: #{rental.book.title} by #{rental.book.author}"
   person_info = "Person: #{rental.person.name}"
   date_info = "Date: #{rental.date}"
-  age_info = "Age: #{person.age}"
+  age_info = "Age: #{rental.person.age}"
   puts "#{rental.person.id}. #{book_info} - #{person_info} - #{date_info} - #{age_info}"
   puts
 end
@@ -144,3 +146,49 @@ end
 def quit
   puts 'Goodbye!'
 end
+
+def main
+  books = []
+  people = []
+  rentals = []
+  loop do
+    display_menu
+    option = gets.chomp.to_i
+    puts ''
+    handle_option(option, books, people, rentals)
+    break if option == 7
+  end
+end
+
+def display_menu
+  puts 'Library Management System'
+  puts '1. List all books'
+  puts '2. List all people'
+  puts '3. Create a person'
+  puts '4. Create a book'
+  puts '5. Create a rental'
+  puts '6. List rentals for a person'
+  puts '7. Quit'
+  print 'Select an option: '
+end
+
+def handle_option(option, books, people, rentals)
+  option_actions = {
+    1 => -> { list_all_books(books) },
+    2 => -> { list_all_people(people) },
+    3 => -> { create_person(people) },
+    4 => -> { create_book(books) },
+    5 => -> { create_rental(people, books, rentals) },
+    6 => -> { list_rentals(rentals) },
+    7 => -> { quit }
+  }
+  action = option_actions[option]
+  if action
+    action.call
+  else
+    puts 'Invalid option!'
+  end
+end
+
+# Call the main method to execute the program
+main
