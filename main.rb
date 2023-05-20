@@ -43,4 +43,3 @@ def handle_option(option, books, people, rentals)
 end
 
 main
-
