@@ -121,9 +121,18 @@ def create_rental(people, books, rentals)
   create_rental_entry(date, selected_book, selected_person, rentals)
   rental_data = {
     "date" => date, 
-    "selected_book" => selected_book, 
-    "selected_person" => selected_person, 
-    "rentals" => rentals, 
+    "selected_book" => {
+      "title" => selected_book.title,
+      "author" => selected_book.author,
+    }, 
+    "selected_person" => {
+      "name" => selected_person.name,
+      "id" => selected_person.id,
+      "age" => selected_person.age,
+    }, 
+    "rentals" => {
+      "date" => date
+    }, 
   }
   path = './data/rentals.json'
   write_file(rental_data,path)
