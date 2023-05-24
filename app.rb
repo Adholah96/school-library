@@ -4,6 +4,7 @@ require_relative 'book'
 require_relative 'rental'
 require_relative 'student'
 require_relative 'teacher'
+require 'json'
 
 def list_all_books(books)
   puts 'List of books:'
@@ -21,6 +22,18 @@ def list_all_people(people)
     person_type = person.instance_of?(Student) ? '[Student]' : '[Teacher]'
     puts "#{index + 1}. #{person_type} Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
     puts
+  end
+end
+
+def write_file(data,path)
+  if File.exist?(path)
+    file = File.open(path, 'a')
+    file.puts(data.to_json)
+    file.close
+  else
+    file = File.open(path, 'w')
+    file.puts(data.to_json)
+    file.close
   end
 end
 
@@ -51,6 +64,13 @@ def create_student(people)
   person = Student.new(age, student_classroom, name: name, parent_permission: permission)
   people.push(person)
   student_classroom.students.push(person) # Add the student to the classroom
+  student_data = {
+    'age' => age,  
+    'name' => name, 
+    'parent_permission' => permission,
+  }
+  path = './data/student.json'
+  write_file(student_data,path)
   puts 'Person created successfully!'
   puts
 end
@@ -64,6 +84,13 @@ def create_teacher(people)
   specialization = gets.chomp
   person = Teacher.new(age, specialization, name: name)
   people.push(person)
+  teacher_data = {
+    "age" => age,
+    "specialization" => specialization, 
+    "name" => name, 
+  }
+  path = './data/teacher.json'
+  write_file(teacher_data,path)
   puts 'Person created successfully!'
   puts
 end
@@ -74,6 +101,12 @@ def create_book(books)
   print 'Author: '
   author = gets.chomp
   books.push(Book.new(title, author))
+  book_data = {
+    "title" => title, 
+    "author" => author,
+  }
+  path = './data/book.json'
+  write_file(book_data,path)
   puts 'Book created successfully!'
   puts
 end
@@ -86,6 +119,14 @@ def create_rental(people, books, rentals)
   print 'Date: '
   date = gets.chomp
   create_rental_entry(date, selected_book, selected_person, rentals)
+  rental_data = {
+    "date" => date, 
+    "selected_book" => selected_book, 
+    "selected_person" => selected_person, 
+    "rentals" => rentals, 
+  }
+  path = './data/rentals.json'
+  write_file(rental_data,path)
 end
 
 def select_book(books)
